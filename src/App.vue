@@ -1,13 +1,13 @@
 <script>
-import ToDo from './components/ToDo.vue';
-import Header from './components/Header.vue';
+import ToDo from './components/ToDo.vue'
+import Header from './components/Header.vue'
 
 export default {
   name: 'App',
   components: {
     ToDo,
-    Header,
-  },
+    Header
+  }
 }
 </script>
 
@@ -29,9 +29,9 @@ export default {
   min-height: 100vh;
 }
 
-html, body {
+html,
+body {
   margin: 0px !important;
   padding: 0px !important;
 }
-
 </style>
