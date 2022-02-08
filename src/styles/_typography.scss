@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Ubuntu';
-  src: local('ubuntu'), url(/fonts/Ubuntu/Ubuntu-Regular.ttf) format('truetype');
+  src: url(/fonts/Ubuntu/Ubuntu-Regular.ttf) format('truetype');
 }
 
 $font-family-base: 'Ubuntu', Helvetica, Arial, Lucida, sans-serif;

@@ -71,7 +71,8 @@ export default {
     border: none;
     padding: 2px 5px;
     caret-color: white;
-    font-size: 24px;
+    font-size: $font-size-sm;
+    font-family: $font-family-base;
     line-height: 100%;
     color: white;
     padding-bottom: 0px;
