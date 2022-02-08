@@ -20,7 +20,7 @@ export default {
   computed: {
     classes() {
       return `c-button c-button--${this.size} ${
-        this.disabled ? 'c-button--DISABLED' : ''
+        this.disabled ? 'c-button--disabled' : ''
       }`
     }
   }
@@ -51,7 +51,7 @@ export default {
     height: 40px;
   }
 
-  &--DISABLED {
+  &--disabled {
     pointer-events: none;
     opacity: 0.5;
   }

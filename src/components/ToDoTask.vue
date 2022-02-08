@@ -34,8 +34,8 @@ export default {
       <c-button
         :disabled="!task.label"
         :class="[
-          { 'task-control-panel-button--checked': task.done },
-          { 'task-control-panel-button--not-checked': !task.done }
+          { 'task-control-panel-button--active': task.done },
+          { 'task-control-panel-button--not-active': !task.done }
         ]"
         icon="check"
         class="task-control-panel-button"
@@ -95,12 +95,12 @@ export default {
     &-button {
       margin-right: $spacing-sm;
 
-      &--checked {
+      &--active {
         transition: 0.3s;
         opacity: 1;
       }
 
-      &--not-checked {
+      &--not-active {
         transition: 0.3s;
         opacity: 0.5;
 

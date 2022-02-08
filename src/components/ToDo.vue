@@ -54,8 +54,8 @@ export default {
         No current tasks
       </div>
     </div>
+    <h1 v-if="allDoneTasks.length" class="todo__header-title">Done</h1>
     <div class="todo__tasks">
-      <h1 v-if="allDoneTasks.length" class="todo__header-title">Done</h1>
       <div v-for="task in allDoneTasks" :key="`task-id-${task.id}`">
         <to-do-task
           :task="task"
