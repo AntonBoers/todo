@@ -19,10 +19,9 @@ export default {
   justify-content: center;
   height: 50px;
   padding: $spacing-md;
-  color: #ffffff;
 
   &__logo {
-    font-size: 32px;
+    font-size: $font-size-base;
   }
 }
 </style>

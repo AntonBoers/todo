@@ -9,6 +9,7 @@ export default {
     },
     icon: {
       type: String,
+      default: 'plus',
       validator: (value) => ['plus', 'trash', 'check'].includes(value)
     },
     disabled: {
@@ -56,12 +57,8 @@ export default {
   }
 
   &:hover {
-    background-color: $secondary-action;
+    background-color: $primary-action-hover;
     cursor: pointer;
-  }
-
-  &__icon {
-    color: white;
   }
 }
 </style>

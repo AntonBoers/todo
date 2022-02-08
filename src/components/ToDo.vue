@@ -33,9 +33,7 @@ export default {
 <template>
   <div class="todo__container">
     <div class="todo__header">
-      <div v-if="allUndoneTasks.length" class="todo__header-title">
-        Your current tasks
-      </div>
+      <div class="todo__header-title">Your current tasks</div>
       <c-button
         :disabled="isAnyTasksEmpty"
         icon="plus"
@@ -52,9 +50,12 @@ export default {
           @remove="removeTask($event)"
         />
       </div>
+      <div v-if="!allUndoneTasks.length" class="todo__tasks-none-title">
+        No current tasks
+      </div>
     </div>
     <div class="todo__tasks">
-      <h1 v-if="allDoneTasks.length" class="todo__tasks-header">Done</h1>
+      <h1 v-if="allDoneTasks.length" class="todo__header-title">Done</h1>
       <div v-for="task in allDoneTasks" :key="`task-id-${task.id}`">
         <to-do-task
           :task="task"
@@ -79,10 +80,11 @@ export default {
     position: relative;
     width: 60%;
     height: 50px;
-    margin-top: $spacing-lg * 2;
+    margin: ($spacing-lg * 2) 0 $spacing-md 0;
 
     &-title {
-      font-size: 32px;
+      font-weight: bold;
+      font-size: $font-size-base;
     }
 
     &-add-task-button {
@@ -96,6 +98,11 @@ export default {
     flex: 1;
     width: 60%;
     min-height: 200px;
+
+    &-none-title {
+      margin: $spacing-lg;
+      font-size: $font-size-sm;
+    }
   }
 }
 </style>

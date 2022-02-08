@@ -3,4 +3,6 @@
   src: local('ubuntu'), url(/fonts/Ubuntu/Ubuntu-Regular.ttf) format('truetype');
 }
 
-$base-font-family: 'Ubuntu', Helvetica, Arial, Lucida, sans-serif;
+$font-family-base: 'Ubuntu', Helvetica, Arial, Lucida, sans-serif;
+$font-size-base: 32px;
+$font-size-sm: 24px;

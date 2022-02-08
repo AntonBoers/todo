@@ -62,7 +62,7 @@ export default {
     flex-grow: 1;
     align-items: center;
     padding-left: $spacing-md;
-    font-size: 28px;
+    font-size: $font-size-base;
   }
 
   &-input {

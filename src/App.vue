@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: $base-font-family;
+  font-family: $font-family-base;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
