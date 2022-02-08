@@ -5,17 +5,24 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    items: [],
+    tasks: [],
   },
   mutations: {
-    addTask (state, payload) {
-      state.items.push(payload);
+    initializeStore(state, store) {
+      this.replaceState(
+        Object.assign(state, JSON.parse(store))
+      );
     },
-    removeTask(state, index) {
-      state.items.splice(index, 1);
+    addTask (state, payload) {
+      state.tasks.push(payload);
+    },
+    removeTask(state, id) {
+      const taskIndex = state.tasks.findIndex((task) => task.id === id)
+      state.tasks.splice(taskIndex, 1);
     },
     updateTask(state, payload) {
-      state.items[payload.index][payload.type] = payload.content;
+      const taskIndex = state.tasks.findIndex(({ id }) => id === payload.id)
+      state.tasks[taskIndex][payload.type] = payload.content;
     },
   },
   actions: {
@@ -25,7 +32,16 @@ export default new Vuex.Store({
     removeTask({ commit }, index) {
       commit('removeTask', index);
     },
+    updateTask({ commit }, payload) {
+      commit('updateTask', payload);
+    }
   },
-  modules: {
+  getters: {
+    allUndoneTasks(state) {
+      return state.tasks.filter((task) => !task.done);
+    },
+    allDoneTasks(state) {
+      return state.tasks.filter((task) => task.done);
+    },
   }
 })

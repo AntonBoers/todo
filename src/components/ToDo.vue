@@ -1,34 +1,31 @@
 <script>
-import TaskInput from './TaskInput.vue';
 import CButton from './CButton.vue';
-import { mapActions, mapState } from 'vuex';
-
+import { mapActions, mapGetters, mapState } from 'vuex';
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name: 'ToDo',
   components: {
-    TaskInput,
     CButton,
   },
   computed: {
-    ...mapState(['items']),
+    ...mapState(['tasks']),
+    ...mapGetters(['allUndoneTasks', 'allDoneTasks']),
     isAnyTasksEmpty() {
-      return this.items.some((item) => item.label === '');
-    }
+      return this.tasks.some((task) => !task.label);
+    },
   },
   methods: {
     ...mapActions(['addTask', 'removeTask', 'updateTask']),
     add() {
       this.addTask({
+        id: uuidv4(),
         label: '',
         done: false,
       });
     },
-    remove(index) {
-      this.removeTask(index);
-    },
-    update(type, index, content) {
-      this.updateTask({type, index, content});
+    update(id, type, content) {
+      this.updateTask({id, type, content});
     }
   },
 }
@@ -44,27 +41,65 @@ export default {
         :disabled="isAnyTasksEmpty"
         icon="plus"
         size="lg"
-        class="todo__header-add"
+        class="todo__header-add-task-button"
         @clicked="add"/>
     </div>
     <div class="todo__tasks">
       <div 
-        v-for="(item, index) in items"
+        v-for="(item, index) in allUndoneTasks"
         :key="`todo__task-${index}`"
         class="todo__task">
-        <div class="todo__task-index">
-          {{ index + 1 }}. 
+        <div class="todo__task-bullet">
+          &#8226;
         </div>
-        <div class="todo__task-input">
-          <task-input />
-        </div>
+        <input 
+          v-model="item.label"
+          type="text"
+          class="todo__task-input"
+          @change="update(item.id, 'label', $event.target.value)" 
+          />
         <div class="todo__task-control-panel">
-          <c-button icon="check" class="todo__task-control-panel-button todo__task-control-panel-button--not-checked" @clicked="update('done', index, true)" />
-          <c-button icon="trash" class="todo__task-control-panel-button" @clicked="remove(index)" />
+          <c-button 
+            :disabled="!item.label"
+            :class="[
+              {'todo__task-control-panel-button--checked': item.done},
+              {'todo__task-control-panel-button--not-checked': !item.done}
+            ]"
+            icon="check"
+            class="todo__task-control-panel-button"
+            @clicked="update(item.id, 'done', !item.done)" />
+          <c-button icon="trash" class="todo__task-control-panel-button" @clicked="removeTask(item.id)" />
         </div>
       </div>
     </div>
-    <task-input />
+    <h1 v-if="allDoneTasks.length" class="todo__tasks-header">Done</h1>
+    <div class="todo__tasks">
+      <div 
+        v-for="(item, index) in allDoneTasks"
+        :key="`todo__task-${index}`"
+        class="todo__task">
+        <div class="todo__task-bullet">
+          &#8226; 
+        </div>
+        <input 
+          v-model="item.label"
+          type="text"
+          class="todo__task-input"
+          @change="update(item.id, 'label', $event.target.value)" 
+        />
+        <div class="todo__task-control-panel">
+          <c-button 
+            icon="check"
+            :class="[
+            {'todo__task-control-panel-button--checked': item.done},
+            {'todo__task-control-panel-button--not-checked': !item.done}
+            ]"
+            class="todo__task-control-panel-button"
+            @clicked="update(item.id, 'done', !item.done)" />
+          <c-button icon="trash" class="todo__task-control-panel-button" @clicked="removeTask(item.id)" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,10 +120,9 @@ export default {
 
     &-title {
       font-size: 32px;
-      color: white;
     }
 
-    &-add {
+    &-add-task-button {
       position: absolute;
       top: 0;
       right: $spacing-md;
@@ -105,17 +139,32 @@ export default {
     display: flex;
     height: 50px;
 
-    &-index {
+    &-bullet {
       display: flex;
       flex-grow: 1;
       align-items: center;
       padding-left: $spacing-md;
-      color: white;
       font-size: 28px;
     }
 
     &-input {
       flex-grow: 3;
+      background: transparent;
+      border: none;
+      padding: 2px 5px;
+      caret-color: white;
+      font-size: 24px;
+      line-height: 100%;
+      color: white;
+      padding-bottom: 0px;
+      border-bottom: 2px solid transparent;
+    
+      &:focus, &:active {
+        border-bottom: 2px solid $secondary-background;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        outline: none;
+      }
     }
 
     &-control-panel {
